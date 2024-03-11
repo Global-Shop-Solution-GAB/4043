@@ -1,0 +1,759 @@
+Program.Sub.ScreenSU.Start
+gui.SS_Form3..create
+gui.SS_Form3..caption("Option BOM Maintenance")
+gui.SS_Form3..size(11820,8835)
+gui.SS_Form3..minx(0)
+gui.SS_Form3..miny(0)
+gui.SS_Form3..position(0,0)
+gui.SS_Form3..event(unload,ss_form3_unload)
+gui.SS_Form3..alwaysontop(False)
+gui.SS_Form3..fontname("Arial")
+gui.SS_Form3..fontsize(8)
+gui.SS_Form3..forecolor(0)
+gui.SS_Form3..fontstyle(,,,,)
+gui.SS_Form3..BackColor(-2147483633)
+gui.SS_Form3..controlbox(True)
+gui.SS_Form3..maxbutton(False)
+gui.SS_Form3..minbutton(False)
+gui.SS_Form3..mousepointer(0)
+gui.SS_Form3..moveable(True)
+gui.SS_Form3..sizeable(False)
+gui.SS_Form3..ShowInTaskBar(True)
+gui.SS_Form3..titlebar(True)
+gui.SS_Form3.lbl_txtOp.create(label,"Option",True,1800,200,1,100,135,True,0,Arial,8,-2147483633,0)
+gui.SS_Form3.lbl_txtOp.defaultvalue("")
+gui.SS_Form3.lbl_txtOp.controlgroup(0)
+gui.SS_Form3.txtOP.create(textbox,"",True,1800,330,0,100,335,False,0,Arial,8,16777215,1)
+gui.SS_Form3.txtOP.event(change,txtop_change)
+gui.SS_Form3.txtOP.maxLength(6)
+gui.SS_Form3.txtOP.defaultvalue("")
+gui.SS_Form3.txtOP.controlgroup(0)
+gui.SS_Form3.lbl_txtOBom.create(label,"Option BOM",True,1800,200,1,2705,825,True,0,Arial,8,-2147483633,0)
+gui.SS_Form3.lbl_txtOBom.defaultvalue("")
+gui.SS_Form3.lbl_txtOBom.controlgroup(0)
+gui.SS_Form3.txtOBom.create(textbox,"",True,1800,330,0,2690,1025,False,0,Arial,8,16777215,1)
+gui.SS_Form3.txtOBom.event(change,txtobom_change)
+gui.SS_Form3.txtOBom.defaultvalue("")
+gui.SS_Form3.txtOBom.controlgroup(0)
+gui.SS_Form3.lbl_txtModel.create(label,"Model No.",True,1800,200,1,100,835,True,0,Arial,8,-2147483633,0)
+gui.SS_Form3.lbl_txtModel.defaultvalue("")
+gui.SS_Form3.lbl_txtModel.controlgroup(0)
+gui.SS_Form3.txtModel.create(textbox,"",True,1800,330,0,100,1035,False,0,Arial,8,16777215,1)
+gui.SS_Form3.txtModel.event(change,txtmodel_change)
+gui.SS_Form3.txtModel.defaultvalue("")
+gui.SS_Form3.txtModel.controlgroup(0)
+gui.SS_Form3.gsfgSubPart.create(gsflexgrid)
+gui.SS_Form3.gsfgSubPart.FixedRows(0)
+gui.SS_Form3.gsfgSubPart.FixedCols(0)
+gui.SS_Form3.gsfgSubPart.visible(True)
+gui.SS_Form3.gsfgSubPart.size(11415,6075)
+gui.SS_Form3.gsfgSubPart.zorder(0)
+gui.SS_Form3.gsfgSubPart.position(100,1500)
+gui.SS_Form3.gsfgSubPart.enabled(True)
+gui.SS_Form3.gsfgSubPart.event(mousedown,gsfgsubpart_mousedown)
+gui.SS_Form3.gsfgSubPart.event(posttextmatrix,gsfgsubpart_posttextmatrix)
+gui.SS_Form3.gsfgSubPart.event(checkclick,gsfgsubpart_checkclick)
+gui.SS_Form3.cmdSave.create(button)
+gui.SS_Form3.cmdSave.caption("Save")
+gui.SS_Form3.cmdSave.visible(True)
+gui.SS_Form3.cmdSave.size(855,375)
+gui.SS_Form3.cmdSave.zorder(0)
+gui.SS_Form3.cmdSave.position(130,7760)
+gui.SS_Form3.cmdSave.enabled(True)
+gui.SS_Form3.cmdSave.fontname("Arial")
+gui.SS_Form3.cmdSave.fontsize(8)
+gui.SS_Form3.cmdSave.event(click,cmdsave_click)
+gui.SS_Form3.cmdSave.defaultvalue("")
+gui.SS_Form3.cmdSave.controlgroup(0)
+gui.SS_Form3.cmdModel.create(button)
+gui.SS_Form3.cmdModel.caption("^")
+gui.SS_Form3.cmdModel.visible(False)
+gui.SS_Form3.cmdModel.size(330,330)
+gui.SS_Form3.cmdModel.zorder(0)
+gui.SS_Form3.cmdModel.position(1985,1015)
+gui.SS_Form3.cmdModel.enabled(True)
+gui.SS_Form3.cmdModel.fontname("Arial")
+gui.SS_Form3.cmdModel.fontsize(8)
+gui.SS_Form3.cmdModel.event(click,cmdmodel_click)
+gui.SS_Form3.cmdModel.defaultvalue("")
+gui.SS_Form3.cmdModel.controlgroup(0)
+gui.SS_Form3.cmdOP.create(button)
+gui.SS_Form3.cmdOP.caption("^")
+gui.SS_Form3.cmdOP.visible(True)
+gui.SS_Form3.cmdOP.size(330,330)
+gui.SS_Form3.cmdOP.zorder(0)
+gui.SS_Form3.cmdOP.position(1980,335)
+gui.SS_Form3.cmdOP.enabled(True)
+gui.SS_Form3.cmdOP.fontname("Arial")
+gui.SS_Form3.cmdOP.fontsize(8)
+gui.SS_Form3.cmdOP.event(click,cmdop_click)
+gui.SS_Form3.cmdOP.defaultvalue("")
+gui.SS_Form3.cmdOP.controlgroup(0)
+gui.SS_Form3.txtModel.tabstop(True)
+gui.SS_Form3.txtModel.tabindex(1)
+gui.SS_Form3.txtOBom.tabstop(True)
+gui.SS_Form3.txtOBom.tabindex(2)
+gui.SS_Form3.cmdSave.tabstop(True)
+gui.SS_Form3.cmdSave.tabindex(3)
+
+
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+
+Variable.UDT.uCurrent.Define("sItem",String,Item)
+Variable.UDT.uCurrent.Define("sDestination",String,Dest_Bom)
+Variable.UDT.uCurrent.Define("iQty",Long,Change_Qty)
+Variable.UDT.uCurrent.Define("sItemDesc",String)
+Variable.UDT.uCurrent.Define("sDestDesc",String)
+Variable.UDT.uCurrent.Define("sOption",String)
+Variable.uGlobal.uCurrent.Declare("uCurrent")
+Variable.UDT.uNew.Define("iRow",Long)
+Variable.UDT.uNew.Define("iQty",Long,Change_Qty)
+Variable.UDT.uNew.Define("sDestination",String,Dest_Bom)
+Variable.UDT.uNew.Define("sItem",String,Item)
+Variable.UDT.uNew.Define("sOptionBom",String,Option_BOM)
+Variable.uGlobal.uNew.Declare("uNew")
+Variable.UDT.uDelete.Define("sItem",String)
+Variable.UDT.uDelete.Define("sDest",String)
+Variable.UDT.uDelete.Define("iQty",Long)
+Variable.UDT.uDelete.Define("iRow",Long)
+Variable.UDT.uDelete.Define("sOptionBom",String)
+Variable.uGlobal.uDelete.Declare("uDelete")
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+F.ODBC.Connection!conx.OpenConnection(V.Ambient.PDSN,V.Ambient.PUser,V.Ambient.PPass)
+V.uGlobal.uNew.Redim(-1,-1)
+V.uGlobal.uDelete.Redim(-1,-1)
+F.Intrinsic.Control.CallSub(Gridstyle2)
+'Check if New Menu Option and configure Header Information so the user must fill in the text boxes
+F.Intrinsic.Control.If(V.Caller.Switches,=,"N")
+	Gui.SS_Form3.cmdOP.Visible(False)
+	Gui.SS_Form3.txtModel.Enabled(False)
+	Gui.SS_Form3.txtOBom.Enabled(False)
+	Gui.SS_Form3.txtOP.Enabled(True)
+	Gui.SS_Form3.gsfgSubPart.Visible(False)
+F.Intrinsic.Control.EndIf
+
+'If the Menu Option is Open Launch screen
+F.Intrinsic.Control.If(V.Caller.Switches,=,"O")
+	Gui.SS_Form3.gsfgSubPart.Visible(False)
+F.Intrinsic.Control.EndIf
+
+Gui.SS_Form3..Show
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: DaisyDataOptionMaint.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form3_unload)
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.Main.End
+
+program.sub.ss_form3_unload.start
+F.Intrinsic.Control.SetErrorHandler("ss_form3_unload_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+'Close connection and exit program
+F.ODBC.Connection!conx.Close
+Gui.SS_Form3..Visible(False)
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("ss_form3_unload_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: DaisyDataOptionMaint.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.ss_form3_unload.end
+
+Program.Sub.GridStyle2.Start
+F.Intrinsic.Control.SetErrorHandler("GridStyle2_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+Gui.SS_Form3.gsfgSubPart.Rows(2)
+Gui.SS_Form3.gsfgSubPart.FixedRows(1)
+Gui.SS_Form3.gsfgSubPart.Cols(8)
+
+Gui.SS_Form3.gsfgSubPart.SetColumnPercentages(".08:.15:.25:.15:.25:.08:.06:.0")
+
+'Buildstyle
+'Column 0
+'Style 1
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,0,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,0,"Fontstyle","Bold",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,0,"Format","Alignment",2)
+'Column 0
+'Style 2
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,0,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,0,"Format","Alignment",2)
+'Column 0
+'Style 3
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,0,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,0,"Format","Alignment",2)
+
+'Column 1
+'Style 1
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,1,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,1,"Fontstyle","Bold",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,1,"Format","Alignment",2)
+'Column 1
+'Style 2
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,1,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,1,"Format","Alignment",2)
+'Column 1
+'Style 3
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,1,"Type","Locked",False)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,1,"Format","Alignment",2)
+
+'Column 2
+'Style 1
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,2,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,2,"Fontstyle","Bold",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,2,"Format","Alignment",2)
+'Column 2
+'Style 2
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,2,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,2,"Format","Alignment",2)
+'Column 2
+'Style 3
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,2,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,2,"Format","Alignment",2)
+
+'Column 3
+'Style 1
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,3,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,3,"Fontstyle","Bold",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,3,"Format","Alignment",2)
+'Column 3
+'Style 2
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,3,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,3,"Format","Alignment",2)
+'Column 3
+'Style 3
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,3,"Type","Locked",False)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,3,"Format","Alignment",2)
+
+'Column 4
+'Style 1
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,4,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,4,"Fontstyle","Bold",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,4,"Format","Alignment",2)
+'Style 2
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,4,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,4,"Format","Alignment",2)
+'Column 4
+'Style 3
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,4,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,4,"Format","Alignment",2)
+
+'Column 5
+'Style 1
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,5,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,5,"Fontstyle","Bold",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,5,"Format","Alignment",2)
+'Column 5
+'Style 2
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,5,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,5,"Format","Alignment",6)
+'Column 5
+'Style 3
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,5,"Type","Locked",False)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,5,"Format","Alignment",6)
+
+'Column 6
+'Style 1
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,6,"Type","Locked",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,6,"Fontstyle","Bold",True)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(1,6,"Format","Alignment",2)
+'Style 2
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,6,"Format","Alignment",4)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(2,6,"Type","Checkbox",False)
+'Column 6
+'Style 3
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,6,"Format","Alignment",4)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,6,"Type","Checkbox",False)
+Gui.SS_Form3.gsfgSubPart.BuildStyle(3,6,"Type","Locked",True)
+
+'Apply Style to Row 0
+Gui.SS_Form3.gsfgSubPart.ApplyStyle(0,1)
+'Apply Style to Row 1
+Gui.SS_Form3.gsfgSubPart.ApplyStyle(1,3)
+'Define column Headers
+Gui.SS_Form3.gsfgSubPart.TextMatrix(0,0,"Option")
+Gui.SS_Form3.gsfgSubPart.TextMatrix(1,0,"Item")
+Gui.SS_Form3.gsfgSubPart.TextMatrix(2,0,"Item Description")
+Gui.SS_Form3.gsfgSubPart.TextMatrix(3,0,"Destination")
+Gui.SS_Form3.gsfgSubPart.TextMatrix(4,0,"Destination BOM Desc.")
+Gui.SS_Form3.gsfgSubPart.TextMatrix(5,0,"Quantity")
+Gui.SS_Form3.gsfgSubPart.TextMatrix(6,0,"Delete")
+
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("GridStyle2_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: DaisyDataOptionMaint.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form3_unload)
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.GridStyle2.End
+
+program.sub.gsfgsubpart_mousedown.start
+F.Intrinsic.Control.SetErrorHandler("gsfgsubpart_mousedown_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sRow.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sOptID.Declare(String)
+V.Local.iRow.Declare(Long)
+V.Local.iRCount.Declare(Long)
+V.Local.iCol.Declare(Long)
+
+V.Local.sOptID.Set(V.Screen.SS_Form3!txtOP.Text)
+
+'F.Intrinsic.String.LPad(V.Local.sOptID.Trim,0,6,V.Local.sOptID)
+'This is row ordinal
+V.Local.iRow.Set(V.Screen.SS_Form3!gsfgSubPart.Row)
+
+'Row Count - Subtract 1 to get the proper ordinal
+V.Local.iRCount.Set(V.Screen.SS_Form3!gsfgSubPart.Rows)
+F.Intrinsic.Math.Sub(V.Local.iRCount,1,V.Local.iRCount)
+
+'Get column ordinal
+V.Local.iCol.Set(V.Screen.SS_Form3!gsfgSubPart.Col)
+
+'Exit this sub if the qty column is being entered
+F.Intrinsic.Control.If(V.Local.iCol,=,5)
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Endif
+
+'change active cell so when information is saved it will show up on the screen
+Gui.SS_Form3.gsfgSubPart.SetActiveCell(5,V.Local.iRow)
+'Check to see if column 1 or 3 is clicked
+F.Intrinsic.Control.If(V.Local.iCol,=,1,"OR",V.Local.iCol,=,3)
+	'check to see if the last row was clicked
+	F.Intrinsic.Control.If(V.Local.iRCount,=,V.Local.iRow)
+		'Save Option ID to the Flexgrid
+		Gui.SS_Form3.gsfgSubPart.TextMatrix(0,V.Local.iRow,V.Local.sOptID.Trim)
+		F.Intrinsic.UI.SetBrowserHotTypeAhead(True)
+			'Launch Browser
+			F.Intrinsic.UI.Browser(3005,"conx",V.Local.sRet)
+			F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+			'Check to see if cancel was clicked
+			F.Intrinsic.Control.If(V.Local.sRet,=,"***CANCEL***")
+				'Exit sub if it was
+				F.Intrinsic.Control.ExitSub
+			'Else fill in the Flex grid
+			F.Intrinsic.Control.Else
+				F.Intrinsic.Control.SelectCase(V.Local.iCol)
+					F.Intrinsic.Control.Case(1)
+						Gui.SS_Form3.gsfgSubPart.TextMatrix(1,V.Local.iRow,V.Local.sRet(0))
+						Gui.SS_Form3.gsfgSubPart.TextMatrix(2,V.Local.iRow,V.Local.sRet(2))
+						Gui.SS_Form3.gsfgSubPart.TextMatrix(3,V.Local.iRow,V.Local.sRet(0))
+						Gui.SS_Form3.gsfgSubPart.TextMatrix(4,V.Local.iRow,V.Local.sRet(2))
+
+						Gui.SS_Form3.gsfgSubPart.Commit
+						Gui.SS_Form3.gsfgSubPart.ApplyStyle(V.Local.iRow,3)
+						'Set active cell so the Check box will not be auto checked on any random mouse click
+						Gui.SS_Form3.gsfgSubPart.SetActiveCell(5,V.Local.iRow)
+					F.Intrinsic.Control.Case(3)
+						Gui.SS_Form3.gsfgSubPart.TextMatrix(3,V.Local.iRow,V.Local.sRet(0))
+						Gui.SS_Form3.gsfgSubPart.TextMatrix(4,V.Local.iRow,V.Local.sRet(2))
+						Gui.SS_Form3.gsfgSubPart.Commit
+						Gui.SS_Form3.gsfgSubPart.ApplyStyle(V.Local.iRow,3)
+						'Set active cell so the check box will not be auto checked on any random mouse click
+						Gui.SS_Form3.gsfgSubPart.SetActiveCell(5,V.Local.iRow)
+					F.Intrinsic.Control.CaseElse
+						'nothing
+				F.Intrinsic.Control.EndSelect
+			F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("gsfgsubpart_mousedown_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: DaisyDataOptionMaint.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form3_unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.gsfgsubpart_mousedown.end
+
+program.sub.gsfgsubpart_posttextmatrix.start
+F.Intrinsic.Control.SetErrorHandler("gsfgsubpart_posttextmatrix_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sQty.Declare(String)
+V.Local.sItem.Declare(String)
+V.Local.sDest.Declare(String)
+V.Local.sOptBom.Declare(String)
+V.Local.iRCount.Declare(Long)
+V.Local.iCount.Declare(Long)
+V.Local.iRow.Declare(Long)
+
+'Get row
+V.Local.iRow.Set(V.Screen.SS_Form3!gsfgSubPart.Row)
+'Get row count
+V.Local.iRCount.Set(V.Screen.SS_Form3!gsfgSubPart.Rows)
+F.Intrinsic.Math.Sub(V.Local.iRCount,1,V.Local.iRCount)
+'Get the Info from flex grid
+Gui.SS_Form3.gsfgSubPart.GetTextMatrix(5,V.Local.iRow,V.Local.sQty)
+Gui.SS_Form3.gsfgSubPart.GetTextMatrix(1,V.Local.iRow,V.Local.sItem)
+Gui.SS_Form3.gsfgSubPart.GetTextMatrix(3,V.Local.iRow,V.Local.sDest)
+V.Local.sOptBom.Set(V.Screen.SS_Form3!txtOBom.Text)
+'Check to make sure the qty is not blank
+F.Intrinsic.Control.If(V.Local.sQty,!=,"")
+	'Redim the New UDT
+	F.Intrinsic.Control.If(V.uGlobal.uNew.UBound,=,-1)
+		V.uGlobal.uNew.Redim(0,0)
+		V.Local.iCount.Set(0)
+	F.Intrinsic.Control.Else
+		F.Intrinsic.Math.Add(V.uGlobal.uNew.UBound,1,V.Local.iCount)
+		V.uGlobal.uNew.RedimPreserve(0,V.Local.iCount)
+	F.Intrinsic.Control.EndIf
+	'Add Info to the New UDT
+	V.uGlobal.uNew(v.Local.iCount)!iRow.Set(V.Local.iRow)
+	V.uGlobal.uNew(v.Local.iCount)!sItem.Set(V.Local.sItem.Trim)
+	V.uGlobal.uNew(v.Local.iCount)!sDestination.Set(V.Local.sDest.Trim)
+	V.uGlobal.uNew(v.Local.iCount)!sOptionBom.Set(V.Local.sOptBom.Trim)
+	V.uGlobal.uNew(v.Local.iCount)!iQty.Set(V.Local.sQty.Trim)
+	'Add blank row to the bottom of the flexgrid
+	F.Intrinsic.Control.If(V.Local.iRow,=,V.Local.iRCount)
+		F.Intrinsic.Control.If(V.Local.sItem,!=,"","AND",V.Local.sDest,!=,"")
+				F.Intrinsic.Math.Add(V.Local.iRCount,2,V.Local.iRCount)
+				Gui.SS_Form3.gsfgSubPart.Rows(V.Local.iRCount)
+				Gui.SS_Form3.gsfgSubPart.ApplyStyle(V.Local.iRow,2)
+				F.Intrinsic.Math.Sub(V.Local.iRCount,1,V.Local.iRCount)
+				Gui.SS_Form3.gsfgSubPart.ApplyStyle(V.Local.iRCount,3)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("gsfgsubpart_posttextmatrix_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: DaisyDataOptionMaint.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form3_unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.gsfgsubpart_posttextmatrix.end
+
+program.sub.cmdsave_click.start
+F.Intrinsic.Control.SetErrorHandler("cmdsave_click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sOptID.Declare(String)
+V.Local.sModelBom.Declare(String)
+V.Local.sOptBom.Declare(String)
+V.Local.sSql.Declare(String)
+V.Local.iQty.Declare(Long)
+V.Local.iRow.Declare(Long)
+V.Local.iCol.Declare(Long)
+V.Local.iCount.Declare(Long)
+
+'If useing New Menu Item
+F.Intrinsic.Control.If(V.Caller.Switches,=,"N")
+	'Save header Information to the Option_Bom table
+	V.Local.iRow.Set(V.Screen.SS_Form3!gsfgSubPart.Rows)
+	V.Local.sOptID.Set(V.Screen.SS_Form3!txtOP.Text)
+	F.Intrinsic.String.LPad(V.Local.sOptID,0,6,V.Local.sOptID)
+	V.Local.sModelBom.Set(V.Screen.SS_Form3!txtModel.Text)
+	V.Local.sOptBom.Set(V.Screen.SS_Form3!txtOBom.Text)
+	F.Intrinsic.String.Concat("Select * from Daisy_Opt_Xref where Option_ID ='",V.Local.sOptID.Trim,"' and Model_BOM = '",V.Local.sModelBom.Trim,"' and Option_Bom = '",V.Local.sOptBom.Trim,"'",V.Local.sSql)
+	F.ODBC.Connection!conx.OpenLocalRecordsetRW("rst",V.Local.sSql)
+	F.Intrinsic.Control.If(V.ODBC.conx!rst.EOF,=,True)
+		F.ODBC.conx!rst.AddNew
+		F.ODBC.conx!rst.Set!Option_ID(V.Local.sOptID)
+		F.ODBC.conx!rst.Set!Model_Bom(V.Local.sModelBom)
+		F.ODBC.conx!rst.Set!Option_Bom(V.Local.sOptBom)
+		F.ODBC.conx!rst.Update
+	F.Intrinsic.Control.EndIf
+	F.ODBC.conx!rst.Close
+F.Intrinsic.Control.EndIf
+
+'Check to see if anything should be deleted.  If it does remove from flex Grid and Table
+F.Intrinsic.Control.For(V.Local.iCount,0,V.uGlobal.uDelete.UBound,1)
+	V.Local.iRow.Set(V.uGlobal.uDelete(v.Local.iCount)!iRow)
+	F.Intrinsic.Math.Sub(V.Local.iRow,1,V.Local.iRow)
+	Gui.SS_Form3.gsfgSubPart.DeleteRow(v.Local.iRow)
+	F.Intrinsic.String.Concat("Select * from Daisy_Opt_Bom where Option_Bom = '",V.uGlobal.uDelete(v.Local.iCount)!sOptionBom,"' and Dest_Bom = '",V.uGlobal.uDelete(v.Local.iCount)!sDest,"' and Item = '",V.uGlobal.uDelete(V.Local.iCount)!sItem,"'",V.Local.sSql)
+	F.ODBC.Connection!conx.OpenLocalRecordsetRW("rst",V.Local.sSql)
+	F.Intrinsic.Control.If(V.ODBC.conx!rst.EOF,=,False)
+		F.ODBC.conx!rst.Delete
+	F.Intrinsic.Control.EndIf
+	F.ODBC.conx!rst.Close
+F.Intrinsic.Control.Next(V.Local.iCount)
+
+'Check to see if anything should be saved.  If it does add it to the Table
+F.Intrinsic.Control.If(V.uGlobal.uNew.UBound,!=,-1)
+	V.Local.sSql.Set("Select * From Daisy_Opt_Bom")
+	F.ODBC.Connection!conx.OpenLocalRecordsetRW("rst",V.Local.sSql)
+	F.Intrinsic.Variable.SaveUDTToRecordset("conx","rst","V.uGlobal.uNew")
+	F.ODBC.conx!rst.Update
+	F.ODBC.conx!rst.Close
+F.Intrinsic.Control.EndIf
+
+'REdim the Save and Delete UDT's
+V.uGlobal.uDelete.Redim(-1,-1)
+V.uGlobal.uNew.Redim(-1,-1)
+'F.Intrinsic.Control.CallSub(Ss_form3_unload)
+
+F.Intrinsic.Control.If(V.Caller.Switches,=,"N")
+	F.Intrinsic.Control.CallSub(Gridstyle2)
+	Gui.SS_Form3.txtOBom.Text("")
+	Gui.SS_Form3.txtOBom.Enabled(False)
+	Gui.SS_Form3.txtModel.Text("")
+	Gui.SS_Form3.txtModel.Enabled(False)
+	Gui.SS_Form3.txtOP.Text("")
+	Gui.SS_Form3.txtOP.SetFocus
+	'This will clear the flexgrid
+	Gui.SS_Form3.gsfgSubPart.Rows(1)
+	'Apply Style to Row 1
+	Gui.SS_Form3.gsfgSubPart.ApplyStyle(0,1)
+	Gui.SS_Form3.gsfgSubPart.Rows(2)
+	Gui.SS_Form3.gsfgSubPart.ApplyStyle(1,3)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdsave_click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: DaisyDataOptionMaint.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form3_unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.cmdsave_click.end
+
+program.sub.gsfgsubpart_checkclick.start
+F.Intrinsic.Control.SetErrorHandler("gsfgsubpart_checkclick_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sOptBom.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.iRow.Declare(Long)
+V.Local.iCount.Declare(Long)
+
+'Read row to see if the checkbox is checked
+Gui.SS_Form3.gsfgSubPart.ReadRow(V.Screen.SS_Form3!gsfgSubPart.Row,V.Local.sRet)
+V.Local.sOptBom.Set(V.Screen.SS_Form3!txtOBom.Text)
+F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+'If checked add info to the delete UDT for deletion during save sub
+F.Intrinsic.Control.If(V.Local.sRet(6),=,1)
+
+	F.Intrinsic.Control.If(V.uGlobal.uDelete.UBound,=,-1)
+		V.uGlobal.uDelete.Redim(0,0)
+		V.Local.iCount.Set(0)
+	F.Intrinsic.Control.Else
+		V.Local.iCount.Set(V.uGlobal.uDelete.UBound)
+		F.Intrinsic.Math.Add(V.Local.iCount,1,V.Local.iCount)
+		V.uGlobal.uDelete.RedimPreserve(0,V.Local.iCount)
+	F.Intrinsic.Control.EndIf
+
+	V.uGlobal.uDelete(v.Local.iCount)!iRow.Set(V.Screen.SS_Form3!gsfgSubPart.Row)
+	V.uGlobal.uDelete(V.Local.iCount)!sItem.Set(V.Local.sRet(1).Trim)
+	V.uGlobal.uDelete(v.Local.iCount)!sDest.Set(V.Local.sRet(3).Trim)
+	V.uGlobal.uDelete(v.Local.iCount)!iQty.Set(V.Local.sRet(5).Trim)
+	V.uGlobal.uDelete(v.Local.iCount)!sOptionBom.Set(V.Local.sOptBom.Trim)
+'If the check box is unchecked make sure the information is removed from the Delete udt
+F.Intrinsic.Control.Else
+
+	F.Intrinsic.Variable.UDTSeek(V.uGlobal.uDelete!iRow,V.Screen.SS_Form3!gsfgSubPart.Row,4,V.Local.iRow)
+	F.Intrinsic.Variable.UDTFlagOrdinal(v.uGlobal.uDelete,True,v.Local.iRow)
+	F.Intrinsic.Variable.UDTDeleteFlagged(V.uGlobal.uDelete)
+
+F.Intrinsic.Control.EndIf
+	
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("gsfgsubpart_checkclick_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: DaisyDataOptionMaint.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form3_unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.gsfgsubpart_checkclick.end
+
+program.sub.cmdop_click.start
+F.Intrinsic.Control.SetErrorHandler("cmdop_click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sSql.Declare(String)
+V.Local.sTitles.Declare(String)
+V.Local.iWidths.Declare(Long)
+V.Local.iCount.Declare(Long)
+V.Local.iRow.Declare(Long)
+
+'Custom Browser
+F.Intrinsic.String.Split("Option*!*Model*!*Bom Option","*!*",V.Local.sTitles)
+F.Intrinsic.String.Split("1000*!*1000*!*1000","*!*",V.Local.iWidths)
+F.Intrinsic.UI.MiniBrowser("Select BOM Option","conx","Select Option_ID, Model_BOM, Option_BOM from Daisy_Opt_Xref",V.Local.sTitles,V.Local.iWidths,V.Local.sRet)
+'Check to see if BOM was selected
+F.Intrinsic.Control.If(V.Local.sRet,=,"***CANCEL***")
+
+F.Intrinsic.Control.Else
+	'Split return and save values
+	F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+	Gui.SS_Form3.txtOP.Text(V.Local.sRet(0).Trim)
+	Gui.SS_Form3.txtModel.Text(V.Local.sRet(1).Trim)
+	Gui.SS_Form3.txtOBom.Text(V.Local.sRet(2).Trim)
+	'Get the Information associated with the Option Bom
+	F.Intrinsic.String.Concat("Select Dest_Bom, Item, Change_Qty from Daisy_Opt_Bom where Option_Bom = '",V.Local.sRet(2).Trim,"'",V.Local.sSql)
+	F.ODBC.Connection!conx.OpenLocalRecordsetRO("rst",V.Local.sSql)
+	F.Intrinsic.Variable.LoadUDTFromRecordset("conx","rst","v.uGlobal.uCurrent",False)
+	F.ODBC.conx!rst.Close
+	'Loop through the current Option Bom and get the Item Description and Destination Description
+	F.Intrinsic.Control.For(V.Local.iCount,0,V.uGlobal.uCurrent.UBound,1)
+		F.Intrinsic.String.Concat("Select Description from Bom_Eng where Part = '",V.uGlobal.uCurrent(v.Local.iCount)!sItem.Trim,"'",V.Local.sSql)
+		F.ODBC.Connection!conx.OpenLocalRecordsetRO("rst",V.Local.sSql)
+		F.Intrinsic.Control.If(V.ODBC.conx!rst.EOF,=,False)
+			V.uGlobal.uCurrent(v.Local.iCount)!sItemDesc.Set(V.ODBC.conx!rst.FieldValTrim!Description)
+		F.Intrinsic.Control.EndIf
+		F.ODBC.conx!rst.Close
+		F.Intrinsic.String.Concat("Select Description from Bom_Eng where Part = '",V.uGlobal.uCurrent(v.Local.iCount)!sDestination.Trim,"'",V.Local.sSql)
+		F.ODBC.Connection!conx.OpenLocalRecordsetRO("rst",V.Local.sSql)
+		F.Intrinsic.Control.If(V.ODBC.conx!rst.EOF,=,False)
+			V.uGlobal.uCurrent(v.Local.iCount)!sDestDesc.Set(V.ODBC.conx!rst.FieldValTrim!Description)
+		F.Intrinsic.Control.EndIf
+		F.ODBC.conx!rst.Close
+	F.Intrinsic.Control.Next(V.Local.iCount)
+	'Set the Option Id for the Bom Option
+	F.Intrinsic.Variable.UDTSetMemberValue(V.uGlobal.uCurrent!sOption,V.Local.sRet(0))
+F.Intrinsic.Control.EndIf
+'Load Flexgrid
+Gui.SS_Form3.gsfgSubPart.LoadFromUDT("v.uGlobal.uCurrent","sOption*!*sItem*!*sItemDesc*!*sDestination*!*sDestDesc*!*iQty",2)
+'Add blank row to flexgrid
+V.Local.iRow.Set(V.Screen.SS_Form3!gsfgSubPart.Rows)
+F.Intrinsic.Math.Add(V.Local.iRow,1,V.Local.iRow)
+Gui.SS_Form3.gsfgSubPart.Rows(V.Local.iRow)
+F.Intrinsic.Math.Sub(V.Local.iRow,1,V.Local.iRow)
+Gui.SS_Form3.gsfgSubPart.ApplyStyle(V.local.iRow,3)
+'Show Flexgrid
+Gui.SS_Form3.gsfgSubPart.Visible(True)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdop_click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: DaisyDataOptionMaint.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form3_unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.cmdop_click.end
+
+program.sub.txtop_change.start
+F.Intrinsic.Control.SetErrorHandler("txtop_change_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+'Check it is New Menu Item and that the Option text box is filled in
+F.Intrinsic.Control.If(V.Screen.SS_Form3!txtOp.Text,!=,"","AND",V.Caller.Switches,=,"N")
+	'Enable the Model text box
+	Gui.SS_Form3.txtModel.Enabled(True)
+'	Gui.SS_Form3.txtModel.SetFocus
+F.Intrinsic.Control.Else
+	Gui.SS_Form3.txtModel.Enabled(False)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtop_change_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: DaisyDataOptionMaint.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form3_unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.txtop_change.end
+
+program.sub.txtmodel_change.start
+F.Intrinsic.Control.SetErrorHandler("txtmodel_change_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+'Make sure the New Menu Item is being used and that the model text box is filled in
+F.Intrinsic.Control.If(V.Screen.SS_Form3!txtModel.Text,!=,"","AND",V.Caller.Switches,=,"N")
+	'Enable the Option Bom text box
+	Gui.SS_Form3.txtOBom.Enabled(True)
+'	Gui.SS_Form3.txtOBom.SetFocus
+F.Intrinsic.Control.Else
+	Gui.SS_Form3.txtOBom.Enabled(False)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtmodel_change_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: DaisyDataOptionMaint.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form3_unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.txtmodel_change.end
+
+program.sub.txtobom_change.start
+F.Intrinsic.Control.SetErrorHandler("txtobom_change_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+'Make suer the Option Bom text box is filled and thet the New Menu Item is being used
+F.Intrinsic.Control.If(V.Screen.SS_Form3!txtOBom.Text,!=,"","AND",V.Caller.Switches,=,"N")
+	'Show flexgrid
+	Gui.SS_Form3.gsfgSubPart.Visible(True)
+F.Intrinsic.Control.Else
+	Gui.SS_Form3.gsfgSubPart.Visible(False)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtobom_change_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: DaisyDataOptionMaint.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form3_unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.txtobom_change.end
+
+
